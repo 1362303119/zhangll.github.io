@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的时钟</title>
+    <style>
+      body{
+      background:url(1.jpg)  no-repeat center center;
+      background-size:cover;
+     background-attachment:fixed;
+      background-color:#CCCCCC;
+      }
+
+        *
+        {
+            margin: 0 auto;
+            text-align: center;
+        }
+        .max
+        {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 1px solid black;
+            
+        }
+        .zhizhen
+        {
+            position:absolute;
+            
+            width: 200px;
+            height: 200px;
+            transform: rotate(-90deg);
+            border-radius: 50%;
+            
+        }
+        #miaozhen
+        {
+            position:absolute;
+            width: 85px;
+            height:1px;
+            top:50%;
+            left: 50%;
+            background-color: blue;
+            transform-origin: left 50%;
+        }
+        #fenzhen
+        {
+            position:absolute;
+            width: 70px;
+            top:50%;
+            left: 50%;
+            height:1px;
+            background-color:springgreen;
+            transform-origin: left 50%;
+        }
+        #shizhen
+        {
+            position:absolute;
+            width: 55px;
+            top:50%;
+            left: 50%;
+            height:1px;
+            background-color: red;
+            transform-origin: left 50%;
+        }
+        #shijian
+        {
+            width: 200px;
+            height: 70px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+        }
+        #shijian>p
+        {
+            line-height: 70px;
+            font-size: 40px;
+        }
+        #shijian span
+        {
+            border: 1px solid red;
+        }
+        .shuzi
+        {
+            font-size: 10px;
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color:#333;
+            color: #fff;
+        }
+        .shuzi_top
+        {
+            position: absolute;
+            top: 0px;
+            left: 95px;
+        }
+        .shuzi_left
+        {
+            position: absolute;
+            top: 92.5px;
+            left: 5px;
+        }
+        .shuzi_rigth
+        {
+            position:absolute;
+            top: 92.5px;
+            right: 5px;
+        }
+        .shuzi_bottom
+        {
+            position:absolute;
+            bottom: 0px;
+            left: 97.5px;
+        }
+        .ys
+        {
+            position:absolute;
+            top: 15px;
+            left: 15px;
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            position: absolute;
+            background-color: #fff;
+            border:1px solid black;
+        }
+        .aaa
+        {
+            
+        }
+    </style>
+    <script>
+        var s,m,h;
+        function huoqushijian()
+        {
+            var today=new Date();
+            s=today.getSeconds();
+            m=today.getMinutes();
+            h=today.getHours();
+        }
+
+        huoqushijian();
+        function sxuanzhuan()
+        {
+            s++;
+            var rotates=s+(s*5);
+            var miaozhen=document.getElementById("miaozhen");
+            if (s<60) 
+            {
+                miaozhen.style.transform="rotate("+rotates+"deg)";
+            }
+            else
+            {
+                s=0;
+                miaozhen.style.transform="rotate("+rotates+"deg)";
+            } 
+        }
+        function mxuanzhuan()
+        {
+            huoqushijian();
+            var rotates=m+(m*5);
+            var fenzhen=document.getElementById("fenzhen");
+            if (m<60) 
+            {
+                fenzhen.style.transform="rotate("+rotates+"deg)";
+            }
+            else
+            {
+                s=0;
+                fenzhen.style.transform="rotate("+rotates+"deg)";
+            }
+        }
+        function hxuanzhuan()
+        {
+            huoqushijian();
+            if(h<12)
+            {
+                xiaoshi=h;
+            }
+            else
+            {
+                xiaoshi=h-12;
+            }
+            var rotates=xiaoshi*30;
+            var shizhen=document.getElementById("shizhen");
+            if (xiaoshi<12)
+            {
+                shizhen.style.transform="rotate("+rotates+"deg)";
+            }
+            else
+            {
+                xiaoshi=0;
+                shizhen.style.transform="rotate("+rotates+"deg)";
+            }
+        }
+        setInterval("sxuanzhuan()","1000");
+        setInterval("mxuanzhuan()","1000");
+        setInterval("hxuanzhuan()","1000");
+        function startTime()
+        {
+            var today=new Date();
+            var h2=today.getHours();
+            var m2=today.getMinutes();
+            var s2=today.getSeconds();
+            // add a zero in front of numbers<10
+            m2=checkTime(m2);
+            s2=checkTime(s2);
+            document.getElementById('shijian').innerHTML="<p>"+h2+":"+m2+":<span>"+s2+"</span>"+"</p>";
+            t=setTimeout('startTime()',1000);
+        }
+        function checkTime(i)
+        {
+            if (i<10)
+            {i="0" + i}
+            return i;
+        }
+</script>
+    </script>
+</head>
+<body onload="mxuanzhuan(),hxuanzhuan(),startTime()">
+    <div class="max">
+        <div class="shuzi">
+            <div class="ys"></div>
+            <p class="shuzi_top">12</p>
+            <p class="shuzi_bottom">6</p>
+            <p class="shuzi_left">9</p>
+            <p class="shuzi_rigth">3</p>
+        </div>
+        <div class="zhizhen">
+            <div id="miaozhen"></div>
+            <div id="fenzhen"></div>
+            <div id="shizhen"></div>
+        </div>
+    </div>
+    <div id="shijian"></div>
+    <div class="aaa"></div>
+<audio src="时钟滴答声.mp3" autoplay="autoplay" loop="loop"></audio>
+</body>
+</html>
